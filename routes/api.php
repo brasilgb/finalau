@@ -1,0 +1,19 @@
+<?php
+
+use App\Http\Controllers\Api\AssociationController;
+use App\Http\Controllers\Api\SaleController;
+use App\Http\Controllers\Api\TotalController;
+use App\Http\Controllers\Api\UploadDataToDatabaseController;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+Route::post('uploaddata', [UploadDataToDatabaseController::class, 'index'])->name('uploaddata');
+Route::get('sales', [SaleController::class, 'getSales'])->name('sales');
+Route::get('chartvendas', [SaleController::class, 'getSalesChart'])->name('chartvendas');
+Route::get('associations', [AssociationController::class, 'getAssociations'])->name('associations');
+Route::get('totals', [TotalController::class, 'getTotals'])->name('totals');
+
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');

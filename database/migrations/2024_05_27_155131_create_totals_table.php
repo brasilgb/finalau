@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('totals', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary()->index();
+            $table->string('id')->primary()->index();
             $table->foreignId('organization_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('total_cnpj');
             $table->string('total_datatu');
