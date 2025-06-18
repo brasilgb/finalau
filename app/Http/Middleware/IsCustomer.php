@@ -18,7 +18,7 @@ class IsCustomer
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::user()->organization_id === null) {
-            return Redirect::route('unauthorized');
+            return Redirect::route('dashboard');
         }
         return $next($request);
     }

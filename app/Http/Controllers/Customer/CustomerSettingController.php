@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
@@ -10,7 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class AdmSettingController extends Controller
+class CustomerSettingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,12 +18,12 @@ class AdmSettingController extends Controller
     public function index()
     {
         if (AdmSetting::get()->isEmpty()) {
-            $data['id'] = '1';
-            AdmSetting::create(['id' => '1']);
+            Model::reguard();
+            AdmSetting::create();
+            Model::unguard();
         }
-        $query = AdmSetting::orderBy("id", "DESC")->first();
-        $settings = AdmSetting::where("id", $query->id)->first();
-        return Inertia::render('admin/admsettings/index', ['settings' => $settings]);
+        $settings = AdmSetting::orderBy("id", "DESC")->first();
+        return Inertia::render('customer/customersettings/index', ['settings' => $settings]);
     }
 
     /**
@@ -32,7 +32,6 @@ class AdmSettingController extends Controller
     public function update(Request $request, AdmSetting $setting): RedirectResponse
     {
         $data = $request->all();
-        
         $storePath = public_path('storage/logos');
         if ($request->hasfile('logo')) {
             $fileName = time() . '.' . $request->logo->extension();
@@ -45,7 +44,6 @@ class AdmSettingController extends Controller
         Model::reguard();
         $setting->update($data);
         Model::unguard();
-        return redirect()->route('admsettings.index')->with('success', 'Dados das configurções alterados com sucesso!');
+        return redirect()->route('customersettings.index')->with('success', 'Dados das configurções alterados com sucesso!');
     }
-
 }

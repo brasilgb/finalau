@@ -1,6 +1,5 @@
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Icon } from '@/components/icon';
-import AppLayout from '@/layouts/app-layout'
 import { BreadcrumbItem } from '@/types';
 import { Head, router, useForm, usePage } from '@inertiajs/react'
 import { Save, Settings } from 'lucide-react';
@@ -10,19 +9,20 @@ import HeadingSmall from '@/components/heading-small';
 import AppearanceTabs from '@/components/appearance-tabs';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import CustomerLayout from '@/layouts/customer-layout';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
     title: 'Dashboard',
-    href: '/admin',
+    href: '/panel',
   },
   {
     title: 'Configurações',
-    href: '/admin/admsettings',
+    href: '/panel/customersettings',
   },
 ];
 
-export default function Users({ settings }: any) {
+export default function CustomerSettings({ settings }: any) {
   const { flash, auth } = usePage().props as any;
 
   const { data, setData, put, progress, processing, errors } = useForm({
@@ -34,7 +34,7 @@ export default function Users({ settings }: any) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    router.post(route('admsettings.update', settings.id), {
+    router.post(route('customersettings.update', settings.id), {
       _method: "put",
       name: data?.name,
       logo: data?.logo,
@@ -42,7 +42,7 @@ export default function Users({ settings }: any) {
     })
   }
   return (
-    <AppLayout>
+    <CustomerLayout>
       {flash.message && <AlertSuccess message={flash.message} />}
       <Head title="Configurações" />
       <div className='flex items-center justify-between h-16 px-4 mb-4'>
@@ -99,6 +99,6 @@ export default function Users({ settings }: any) {
           </div>
         </form>
       </div>
-    </AppLayout>
+    </CustomerLayout>
   )
 }

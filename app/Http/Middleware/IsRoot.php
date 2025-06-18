@@ -18,7 +18,7 @@ class IsRoot
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::user()->organization_id !== null) {
-            return Redirect::route('unauthorized');
+            return Redirect::route('panel');
         }
         return $next($request);
     }

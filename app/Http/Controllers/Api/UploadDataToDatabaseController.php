@@ -59,11 +59,11 @@ class UploadDataToDatabaseController extends Controller
                         "resumo_desfil" => $jdata['resumo_desfil'],
                         "resumo_datmvt" => $jdata['resumo_datmvt'],
                         "resumo_yearmonth" => substr($jdata['resumo_datmvt'], 0, 6),
-                        "resumo_valdev" => $jdata['resumo_valdev'],
-                        "resumo_valven" => $jdata['resumo_valven'],
-                        "resumo_margem" => $jdata['resumo_margem'],
-                        "resumo_presen" => $jdata['resumo_presen'],
-                        "resumo_metdia" => $jdata['resumo_metdia'],
+                        "resumo_valdev" => floatval($jdata['resumo_valdev']),
+                        "resumo_valven" => floatval($jdata['resumo_valven']),
+                        "resumo_margem" => floatval($jdata['resumo_margem']),
+                        "resumo_presen" => floatval($jdata['resumo_presen']),
+                        "resumo_metdia" => floatval($jdata['resumo_metdia']),
                     ]
                 );
             };
@@ -84,11 +84,11 @@ class UploadDataToDatabaseController extends Controller
                         "assoc_datmvt" => $jdata['assoc_datmvt'],
                         "assoc_ass" => $jdata['assoc_ass'],
                         "assoc_desass" => $jdata['assoc_desass'],
-                        "assoc_valdev" => $jdata['assoc_valdev'],
-                        "assoc_valven" => $jdata['assoc_valven'],
-                        "assoc_margem" => $jdata['assoc_margem'],
-                        "assoc_repres" => $jdata['assoc_repres'],
-                        "assoc_metdia" => $jdata['assoc_metdia']
+                        "assoc_valdev" => floatval($jdata['assoc_valdev']),
+                        "assoc_valven" => floatval($jdata['assoc_valven']),
+                        "assoc_margem" => floatval($jdata['assoc_margem']),
+                        "assoc_repres" => floatval($jdata['assoc_repres']),
+                        "assoc_metdia" => floatval($jdata['assoc_metdia'])
                     ]
                 );
             };
@@ -107,17 +107,17 @@ class UploadDataToDatabaseController extends Controller
                         "total_cnpj" => $jdata['total_cnpj'],
                         "total_filial" => intval($jdata['total_filial']),
                         "total_datatu" => $jdata['total_datatu'],
-                        "total_valdev" => $jdata['total_valdev'],
-                        "total_valven" => $jdata['total_valven'],
-                        "total_margem" => $jdata['total_margem'],
-                        "total_permet" => $jdata['total_permet'],
-                        "total_projec" => $jdata['total_projec'],
-                        "total_valjur" => $jdata['total_valjur'],
-                        "total_perjur" => $jdata['total_perjur'],
-                        "total_valina" => $jdata['total_valina'],
-                        "total_perina" => $jdata['total_perina'],
-                        "total_valest" => $jdata['total_valest'],
-                        "total_meta" => $jdata['total_meta']
+                        "total_valdev" => floatval($jdata['total_valdev']),
+                        "total_valven" => floatval($jdata['total_valven']),
+                        "total_margem" => floatval($jdata['total_margem']),
+                        "total_permet" => floatval($jdata['total_permet']),
+                        "total_projec" => floatval($jdata['total_projec']),
+                        "total_valjur" => floatval($jdata['total_valjur']),
+                        "total_perjur" => floatval($jdata['total_perjur']),
+                        "total_valina" => floatval($jdata['total_valina']),
+                        "total_perina" => floatval($jdata['total_perina']),
+                        "total_valest" => floatval($jdata['total_valest']),
+                        "total_meta" =>   floatval($jdata['total_meta'])
                     ]
                 );
             };

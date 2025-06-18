@@ -43,15 +43,16 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'flash' => [
-                'message' => fn () => $request->session()->get('success'),
+                'message' => fn() => $request->session()->get('success'),
             ],
             'admsetting' => AdmSetting::first(['name', 'logo']),
             'name' => config('app.name'),
+            'url' => config('app.url'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
                 'user' => $request->user(),
             ],
-            'ziggy' => fn (): array => [
+            'ziggy' => fn(): array => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],

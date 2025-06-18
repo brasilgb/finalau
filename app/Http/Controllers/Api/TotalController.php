@@ -30,7 +30,6 @@ class TotalController extends Controller
         ], 200);
     }
 
-
     public function getTotals(Request $request)
     {
         $wquery = Total::where('total_datatu', $request->date)->where('organization_id', $request->organization)->where('total_filial', $request->company)->first();
