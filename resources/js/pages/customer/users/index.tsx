@@ -1,7 +1,7 @@
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Icon } from '@/components/icon';
 import { BreadcrumbItem } from '@/types';
-import { Head, Link, usePage } from '@inertiajs/react'
+import { Head, Link, router, usePage } from '@inertiajs/react'
 import { Pencil, Plus, UserCog } from 'lucide-react';
 import moment from 'moment'
 import {
@@ -35,6 +35,10 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Users({ users }: any) {
   const { flash, auth } = usePage().props as any;
+
+  if (auth?.user?.company_id) {
+    return router.get('/panel')
+  }
 
   return (
     <CustomerLayout>
@@ -80,8 +84,8 @@ export default function Users({ users }: any) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {users?.data.length > 0 ?
-                users?.data?.map((user: any) => (
+              {users?.length > 0 ?
+                users?.map((user: any) => (
                   <TableRow key={user.id}>
                     <TableCell>{user.id}</TableCell>
                     <TableCell className="font-medium">{user.name}</TableCell>
@@ -109,7 +113,7 @@ export default function Users({ users }: any) {
                 )
               }
             </TableBody>
-            {users?.data.length > users?.total &&
+            {users?.length > users?.total &&
               <TableFooter>
                 <TableRow>
                   <TableCell colSpan={7}>

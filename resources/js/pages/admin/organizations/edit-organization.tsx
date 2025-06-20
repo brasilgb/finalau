@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { ArrowLeft, Building, Pencil, Plus, Save } from 'lucide-react';
+import { ArrowLeft, Building, Edit, Pencil, Plus, Save } from 'lucide-react';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Switch } from '@/components/ui/switch';
 import { useState } from 'react';
@@ -46,7 +46,7 @@ export default function EditOrganization({ organization }: any) {
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button size={'icon'} className="bg-orange-500 hover:bg-orange-600 text-white">
-                    <Pencil className="h-4 w-4" />
+                    <Edit className="h-4 w-4" />
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[500px]">

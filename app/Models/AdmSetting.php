@@ -9,6 +9,11 @@ class AdmSetting extends Model
 {
     use Multitenantable;
     protected $table = 'settings';
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'id',
+        'organization_id',
+        'name',
+        'logo',
+    ];
     //
 }

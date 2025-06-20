@@ -22,14 +22,12 @@ import {
 import React from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
-import { Link } from "@inertiajs/react"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
-    label: string
-    link: any
+    label?: string
+    link?: any
     filter: string
 }
 
@@ -66,20 +64,29 @@ export function DataTable<TData, TValue>({
             columnVisibility,
             rowSelection,
         },
+        initialState: { //This line
+            pagination: {
+                pageSize: 15,
+            },
+        }
     })
 
     return (
         <div className="w-full">
             <div className="flex items-center justify-between py-4">
-                <Input
-                    placeholder={`Filtrar ${label}...`}
-                    value={(table.getColumn(filter)?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn(filter)?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
-                {link}
+                {filter &&
+                    <>
+                        <Input
+                            placeholder={`Filtrar ${label}...`}
+                            value={(table.getColumn(filter)?.getFilterValue() as string) ?? ""}
+                            onChange={(event) =>
+                                table.getColumn(filter)?.setFilterValue(event.target.value)
+                            }
+                            className="max-w-sm"
+                        />
+                        {link}
+                    </>
+                }
             </div>
 
             <div className="rounded-md border">
@@ -144,7 +151,7 @@ export function DataTable<TData, TValue>({
                         onClick={() => table.previousPage()}
                         disabled={!table.getCanPreviousPage()}
                     >
-                        Previous
+                        Anterior
                     </Button>
                     <Button
                         variant="outline"
@@ -152,7 +159,7 @@ export function DataTable<TData, TValue>({
                         onClick={() => table.nextPage()}
                         disabled={!table.getCanNextPage()}
                     >
-                        Next
+                        Próximo
                     </Button>
                 </div>
             </div>

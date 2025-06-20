@@ -11,9 +11,9 @@ trait Multitenantable
     {
         if (Auth::check()) {
 
-            static::creating(function ($model) {
-                $model->organization_id = Auth::user()->organization_id;
-            });
+            // static::creating(function ($model) {
+            //     $model->organization_id = Auth::user()->organization_id;
+            // });
 
             if (Auth::user()->organization_id !== null) {
                 static::addGlobalScope('organization_id', function (Builder $builder) {

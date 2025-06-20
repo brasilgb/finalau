@@ -21,6 +21,8 @@ import { Badge } from '@/components/ui/badge';
 import { roleUserByValue } from '@/Utils/functions';
 import ActionDelete from '@/components/action-delete';
 import AppPagination from '@/components/app-pagination';
+import { DataTable } from '@/components/data-table';
+import { columns } from './columns';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -50,24 +52,21 @@ export default function Users({ users }: any) {
         </div>
       </div>
 
-      <div className='flex items-center justify-between p-4'>
-        <div>
-          <InputSearch placeholder="Buscar usuário" url="users.index" />
-        </div>
-        <div>
-          <Button variant={'default'} asChild>
-            <Link
-              href={route('users.create')}
-            >
-              <Plus className='h-4 w-4' />
-              <span>Usuário</span>
-            </Link>
-          </Button>
-        </div>
-      </div>
-
       <div className='p-4'>
-        <div className='border rounded-lg'>
+        <DataTable
+          columns={columns}
+          data={users}
+          label={'Usuário'}
+          link={
+            <Button asChild>
+              <Link href={route('users.create')}>
+                <Plus />Usuários
+              </Link>
+            </Button>
+          }
+          filter={'name'}
+        />
+        {/* <div className='border rounded-lg'>
           <Table>
             <TableHeader>
               <TableRow>
@@ -119,7 +118,7 @@ export default function Users({ users }: any) {
               </TableFooter>
             }
           </Table>
-        </div>
+        </div> */}
       </div>
     </AppLayout>
   )

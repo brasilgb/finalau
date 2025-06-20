@@ -17,7 +17,7 @@ class CompanyController extends Controller
      */
         public function index()
     {
-        $companies = Company::with('organization')->get();
+        $companies = Company::where('status', 1)->with('organization')->get();
         return Inertia::render('admin/companies/index',['companies' => $companies]);
     }
 
@@ -37,9 +37,9 @@ class CompanyController extends Controller
     public function store(CompanyRequest $request): RedirectResponse
     {
         $data = $request->all();
-        Company::create($data);
         $request->validated();
         $data['id'] = Company::exists() ? Company::latest()->first()->id + 1 : 1;
+        Company::create($data);
         return redirect()->route('companies.index')->with('success', 'Filial cadastrada com sucesso!');
     }
 

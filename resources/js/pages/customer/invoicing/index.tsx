@@ -11,7 +11,7 @@ export default function Invoicing() {
       <Head title="Dashboard" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">
         <AnaliticHeader title='Análise sobre faturamento' subtitle='Análise do faturamento resumida e por associação' />
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="">
 
           <Tabs defaultValue="summary" className="space-y-4">
             <TabsList>

@@ -8,9 +8,10 @@ interface KpiDashboardProps {
     subtitle: string;
     icon?: LucideIcon | null;
     value: string;
+    type?: string;
 }
 
-export default function KpiDashboard({ title, subtitle, icon, value }: KpiDashboardProps) {
+export default function KpiDashboard({ title, subtitle, icon, value, type }: KpiDashboardProps) {
 
     return (
         <Card>
@@ -19,9 +20,12 @@ export default function KpiDashboard({ title, subtitle, icon, value }: KpiDashbo
                 {icon && <Icon iconNode={icon} className="h-5 w-5" />}
             </CardHeader>
             <CardContent>
-                <div className="text-2xl font-bold">R$ {maskMoney(value)}</div>
+                {type === 'int'
+                    ? <div className="text-2xl font-bold">{value}</div>
+                    : <div className="text-2xl font-bold">R$ {maskMoney(value)}</div>
+                }
                 <div className="flex items-center text-xs text-muted-foreground">
-                    <TrendingUp className="mr-1 h-3 w-3 text-green-500" />
+                    {subtitle && <TrendingUp className="mr-1 h-3 w-3 text-green-500" />}
                     {subtitle}
                 </div>
             </CardContent>

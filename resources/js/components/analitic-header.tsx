@@ -1,6 +1,8 @@
 import React from 'react'
 import { Button } from './ui/button'
 import { Calendar, Download, Filter } from 'lucide-react'
+import { FilterDate } from './select-date';
+import FilterCompany from './select-city';
 
 interface AnaliticHeaderProps {
   title: string;
@@ -14,18 +16,24 @@ export default function AnaliticHeader({ title, subtitle }: AnaliticHeaderProps)
             <p className="text-muted-foreground">{subtitle}</p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm">
+            {/* <Button variant="outline" size="sm">
               <Filter className="mr-2 h-4 w-4" />
               Filtros
-            </Button>
-            <Button variant="outline" size="sm">
+            </Button> */}
+            <div>
+              <FilterCompany />
+            </div>
+            {/* <Button variant="outline" size="sm">
               <Download className="mr-2 h-4 w-4" />
               Exportar
-            </Button>
-            <Button size="sm">
+            </Button> */}
+            {/* <Button size="sm">
               <Calendar className="mr-2 h-4 w-4" />
               Período
-            </Button>
+            </Button> */}
+            <div>
+              <FilterDate />
+            </div>
           </div>
         </div>
   )

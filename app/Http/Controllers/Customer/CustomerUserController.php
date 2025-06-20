@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\Company;
 use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class CustomerUserController extends Controller
@@ -19,12 +21,19 @@ class CustomerUserController extends Controller
      */
     public function index(Request $request)
     {
+        $roles = Auth::user();
+
         $search = $request->get('q');
-        $query = User::orderBy('id', 'DESC');
+        if ($roles->roles == '1') {
+            $query = User::where('status', 1)->orderBy('id', 'DESC');
+        } else {
+            $query = User::where('status', 1)->where('company_id', $roles->company_id)->orderBy('id', 'DESC');
+        }
+
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
         }
-        $users = $query->paginate(12);
+        $users = $query->get();
         $organizations = Organization::get();
         return Inertia::render('customer/users/index', ['users' => $users, 'organizations' => $organizations]);
     }
@@ -34,8 +43,8 @@ class CustomerUserController extends Controller
      */
     public function create()
     {
-        $organizations = Organization::get();
-        return Inertia::render('customer/users/create-user', ['organizations' => $organizations]);
+        $companies = Company::get();
+        return Inertia::render('customer/users/create-user', ['companies' => $companies]);
     }
 
     /**
@@ -58,8 +67,8 @@ class CustomerUserController extends Controller
      */
     public function show(User $customeruser)
     {
-        $organizations = Organization::get();
-        return Inertia::render('customer/users/edit-user', ['user' => $customeruser, 'organizations' => $organizations]);
+        $companies = Company::get();
+        return Inertia::render('customer/users/edit-user', ['user' => $customeruser, 'companies' => $companies]);
     }
 
     /**

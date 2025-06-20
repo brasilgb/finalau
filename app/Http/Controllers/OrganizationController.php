@@ -18,7 +18,7 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        $organizations = Organization::get();
+        $organizations = Organization::where('status', 1)->get();
         return Inertia::render('admin/organizations/index', ['organizations' => $organizations]);
     }
 

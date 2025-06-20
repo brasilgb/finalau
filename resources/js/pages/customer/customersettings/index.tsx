@@ -60,44 +60,46 @@ export default function CustomerSettings({ settings }: any) {
           <HeadingSmall title="Configurações de aparência" description="Altere a aparencia do sistema entre temas claro ou escuro." />
           <AppearanceTabs />
         </div>
-
-        <div className="w-24 my-10">
-          <img
-            src={`/storage/logos/${settings.logo ? settings.logo : "default.png"}`}
-            alt="Imagem de logo"
-          />
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="flex flex-col md:w-2xl gap-4 mt-4">
-
-            <div className="grid gap-2">
-              <Label htmlFor="logo">Logotipo</Label>
-              <Input
-                type="file"
-                id="logo"
-                onChange={(e: any) => setData('logo', e.target.files[0])}
-              />
-              {errors.logo && <div className="text-red-500 text-sm">{errors.logo}</div>}
-            </div>
-
-            <div className="grid gap-2">
-              <Label htmlFor="name">Nome curto</Label>
-              <Input
-                type="text"
-                id="name"
-                value={data.name}
-                onChange={(e) => setData('name', e.target.value)}
+        {auth?.user?.company_id === null &&
+          <>
+            <div className="w-24 my-10">
+              <img
+                src={`/storage/logos/${settings?.logo ? settings?.logo : "default.png"}`}
+                alt="Imagem de logo"
               />
             </div>
-          </div>
-          <div className="flex justify-end md:w-2xl">
-            <Button type="submit" disabled={processing}>
-              <Save />
-              Salvar
-            </Button>
-          </div>
-        </form>
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="flex flex-col md:w-2xl gap-4 mt-4">
+
+                <div className="grid gap-2">
+                  <Label htmlFor="logo">Logotipo</Label>
+                  <Input
+                    type="file"
+                    id="logo"
+                    onChange={(e: any) => setData('logo', e.target.files[0])}
+                  />
+                  {errors.logo && <div className="text-red-500 text-sm">{errors.logo}</div>}
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="name">Nome curto</Label>
+                  <Input
+                    type="text"
+                    id="name"
+                    value={data.name}
+                    onChange={(e) => setData('name', e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end md:w-2xl">
+                <Button type="submit" disabled={processing}>
+                  <Save />
+                  Salvar
+                </Button>
+              </div>
+            </form>
+          </>
+        }
       </div>
     </CustomerLayout>
   )

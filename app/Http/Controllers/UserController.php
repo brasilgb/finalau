@@ -20,11 +20,11 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('q');
-        $query = User::orderBy('id', 'DESC');
+        $query = User::where('status', 1)->orderBy('id', 'DESC');
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
         }
-        $users = $query->paginate(12);
+        $users = $query->get();
         $organizations = Organization::get();
         return Inertia::render('admin/users/index', ['users' => $users, 'organizations' => $organizations]);
     }

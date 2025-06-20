@@ -14,32 +14,33 @@ import { useState } from "react";
 import AlertSuccess from "@/components/app-alert-success";
 import CustomerLayout from "@/layouts/customer-layout";
 
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: 'Dashboard',
-    href: '/panel',
-  },
-  {
-    title: 'Usuários',
-    href: '/panel/customerusers',
-  },
-  {
-    title: 'Alterar',
-    href: '/panel/customerusers',
-  },
-];
 
-export default function CreateUser({ user, organizations }: any) {
+export default function CreateUser({ user, companies }: any) {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const { flash, auth } = usePage().props as any;
+  const breadcrumbs: BreadcrumbItem[] = [
+    {
+      title: 'Dashboard',
+      href: '/panel',
+    },
+    {
+      title: 'Usuários',
+      href: auth?.user?.company_id ? '/panel' : '/panel/customerusers',
+    },
+    {
+      title: 'Alterar',
+      href: '/panel/customerusers',
+    },
+  ];
 
-  const optionsOrganization = organizations.map((organization: any) => ({
-    value: organization.id,
-    label: organization.name,
+const optionsCompany = companies.map((company: any) => ({
+    value: company.id,
+    label: company.subname,
   }));
 
   const { data, setData, put, progress, processing, reset, errors } = useForm({
     organization_id: user?.organization_id,
+    company_id: user?.company_id,
     name: user?.name,
     email: user?.email,
     roles: user?.roles,
@@ -52,18 +53,18 @@ export default function CreateUser({ user, organizations }: any) {
     setData('roles', selected?.value);
   };
   
-  const changeOrganization = (selected: any) => {
-    setData('organization_id', selected?.value);
+  const changeCompany = (selected: any) => {
+    setData('company_id', selected?.value);
   };
   
     const handleSubmit = (e: any) => {
       e.preventDefault();
-      put(route('users.update', user?.id));
+      put(route('customerusers.update', user?.id));
     }
 
   const defaultStatus = rolesUser?.filter((o: any) => o.value == user?.roles).map((opt: any) => ({ value: opt.label, label: opt.label }));
 
-  const defaultOrganization = optionsOrganization?.filter((o: any) => o.value == user?.organization_id).map((opt: any) => ({ value: opt.value, label: opt.label }));
+  const defaultCompany = optionsCompany?.filter((o: any) => o.value == user?.company_id).map((opt: any) => ({ value: opt.value, label: opt.label }));
 
   return (
     <CustomerLayout>
@@ -83,7 +84,7 @@ export default function CreateUser({ user, organizations }: any) {
         <div>
           <Button variant={'default'} asChild>
             <Link
-              href={route('customerusers.index')}
+              href={route(auth?.user?.company_id ? 'panel' : 'customerusers.index')}
             >
               <ArrowLeft h-4 w-4 />
               <span>Voltar</span>
@@ -99,12 +100,12 @@ export default function CreateUser({ user, organizations }: any) {
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="grid grid-cols-3 gap-4 mt-4">
               <div className="grid gap-2">
-                <Label htmlFor="organization_id">Organização</Label>
+                <Label htmlFor="company_id">Filial</Label>
                 <Select
-                  defaultValue={defaultOrganization}
-                  options={optionsOrganization}
-                  onChange={changeOrganization}
-                  placeholder="Selecione a organização"
+                  defaultValue={defaultCompany}
+                  options={optionsCompany}
+                  onChange={changeCompany}
+                  placeholder="Selecione a filial"
                   className="shadow-xs p-0 border text-gray-700 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-9"
                   styles={{
                     control: (baseStyles, state) => ({
@@ -124,7 +125,7 @@ export default function CreateUser({ user, organizations }: any) {
                     }),
                   }}
                 />
-                <InputError className="mt-2" message={errors.organization_id} />
+                <InputError className="mt-2" message={errors.company_id} />
               </div>
 
               <div className="grid gap-2">

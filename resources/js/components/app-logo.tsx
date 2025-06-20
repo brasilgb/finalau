@@ -9,7 +9,7 @@ export default function AppLogo() {
             <div className="flex aspect-square size-8 items-center justify-center">
                 <img
                     className='bg-transparent'
-                    src={`/storage/logos/${admsetting?.logo ? admsetting?.logo : "default.png"}`}
+                    src={`${admsetting?.logo ? '/storage/logos/' + admsetting?.logo : "/default.png"}`}
                     alt="Imagem de logo"
                 />
             </div>

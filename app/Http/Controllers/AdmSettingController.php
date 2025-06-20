@@ -21,8 +21,7 @@ class AdmSettingController extends Controller
             $data['id'] = '1';
             AdmSetting::create(['id' => '1']);
         }
-        $query = AdmSetting::orderBy("id", "DESC")->first();
-        $settings = AdmSetting::where("id", $query->id)->first();
+        $settings = AdmSetting::first();
         return Inertia::render('admin/admsettings/index', ['settings' => $settings]);
     }
 

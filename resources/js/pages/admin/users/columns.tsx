@@ -1,20 +1,16 @@
-"use client"
-
 import { Button, buttonVariants } from "@/components/ui/button"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, DatabaseBackup } from "lucide-react"
+import { ArrowUpDown, Edit } from "lucide-react"
 import moment from "moment"
 import { Badge } from "@/components/ui/badge"
-import { Organization } from "@/types"
-import { maskCnpj } from "@/Utils/mask"
-import ActionDelete from "@/components/action-delete"
-import EditOrganization from "./edit-organization"
+import { Company } from "@/types"
 import { Link } from "@inertiajs/react"
+import ActionDelete from "@/components/action-delete"
+import { roleUserByValue } from "@/Utils/functions"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-
-export const columns: ColumnDef<Organization>[] = [
+export const columns: ColumnDef<Company>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -30,24 +26,30 @@ export const columns: ColumnDef<Organization>[] = [
     },
   },
   {
-    accessorKey: "cnpj",
+    accessorKey: "email",
+    header: () => <div className="text-left">E-mail</div>,
+  },
+  {
+    accessorKey: "roles",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          CNPJ
+          Função
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
     },
     cell: ({ row }) => {
-      const fcnpj = row.original.cnpj
+      const orgs = row.original.status;
       return (
-        <span>{maskCnpj(fcnpj)}</span>
+        <div className="">
+          {roleUserByValue(parseInt(orgs))}
+        </div>
       )
-    }
+    },
   },
   {
     accessorKey: "status",
@@ -83,16 +85,15 @@ export const columns: ColumnDef<Organization>[] = [
   {
     accessorKey: " ",
     cell: ({ row }) => {
-      const orgs = row.original;
+      const comp = row.original;
       return (
         <div className="flex items-center justify-end gap-2">
-          <Button className={`${buttonVariants({ variant: "destructive" })} bg-indigo-500 dark:bg-indigo-500 hover:bg-indigo-500/90 dark:hover:bg-indigo-500/90`} size="icon" title="Limpar dados">
-            <Link href={route('truncate')} className="cursor-default">
-              <DatabaseBackup />
+          <Button className={`${buttonVariants({ variant: "destructive" })} bg-orange-500 hover:bg-orange-500/90 dark:bg-orange-500 dark:hover:bg-orange-500/90`} size="icon" asChild title="Editar usuário">
+            <Link href={route('users.edit', comp.id)}>
+              <Edit />
             </Link>
           </Button>
-          <EditOrganization organization={orgs} />
-          <ActionDelete title={'esta organização'} url={'organizations.destroy'} param={orgs.id} />
+          <ActionDelete title={'este usuário'} url={'users.destroy'} param={comp.id} />
         </div>
       )
     }

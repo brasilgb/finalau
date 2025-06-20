@@ -60,7 +60,6 @@ export default function Organizations({ organizations }: any) {
           link={<CreateOrganization />}
           filter={'name'}
         />
-
       </div>
     </AppLayout>
   )

@@ -3,35 +3,39 @@ import CompostoDashboard from '@/components/composto-dashboard'
 import KpiDashboard from '@/components/kpi-dashboard'
 import RadialDashboard from '@/components/radial-dashboard'
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern'
+import { useAppContext } from '@/contexts/AppContext'
 import CustomerLayout from '@/layouts/customer-layout'
 import apios from '@/Utils/connectApi'
 import { Head, usePage } from '@inertiajs/react'
 import { DollarSign } from 'lucide-react'
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 
 export default function home() {
     const { url } = usePage().props as any;
+    const { companyNumber, selectedDate } = useAppContext();
     const [totalSales, setTotalSales] = useState<any>([]);
     const [chartSales, setChartSales] = useState<any>([]);
+// console.log('4444'+companyNumber, '5555'+selectedDate );
 
     useEffect(() => {
         const getTotals = async () => {
-            await apios.get(`${url}/api/totals?organization=1&company=1&date=20250618`)
+            await apios.get(`${url}/api/totals?organization=1&company=${companyNumber}&date=${moment(selectedDate).format("YYYYMMDD")}`)
                 .then((res) => {
                     setTotalSales(res.data.response.totals);
                 })
                 .catch((err) => {
                     console.log(err);
 
-                }).finally(() => console.log('ok')
+                }).finally(() => console.log('')
                 )
         };
         getTotals();
-    }, []);
+    }, [companyNumber, selectedDate]);
 
     useEffect(() => {
         const getSummary = async () => {
-            await apios.get(`${url}/api/chartsales?organization=1&company=1&date=202405`)
+            await apios.get(`${url}/api/chartsales?organization=1&company=${companyNumber}&date=${moment(selectedDate).format("YYYYMMDD")}`)
                 .then((res) => {
                     setChartSales(res.data.response.sales);
                 })
@@ -42,7 +46,7 @@ export default function home() {
                 )
         };
         getSummary();
-    }, []);
+    }, [companyNumber, selectedDate]);
 
     return (
         <CustomerLayout>

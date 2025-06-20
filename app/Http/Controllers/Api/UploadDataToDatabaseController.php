@@ -7,6 +7,7 @@ use App\Models\Association;
 use App\Models\Sale;
 use App\Models\Organization;
 use App\Models\Total;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class UploadDataToDatabaseController extends Controller
@@ -44,9 +45,13 @@ class UploadDataToDatabaseController extends Controller
 
     public function index(Request $request)
     {
-
+        Model::reguard();
         if ($request->type === "venda") {
             $orgcnpj = Organization::where('cnpj', $request->jdata[0]["resumo_cnpj"]);
+            if (!$orgcnpj) {
+                return $this->responseError('venda');
+            }
+
             foreach ($request->jdata as $jdata) {
                 Sale::updateOrCreate(
                     [
@@ -67,11 +72,16 @@ class UploadDataToDatabaseController extends Controller
                     ]
                 );
             };
+
             return $this->responseUpdate('venda');
         }
 
         if ($request->type === "assoc") {
             $orgcnpj = Organization::where('cnpj', $request->jdata[0]["assoc_cnpj"]);
+            if (!$orgcnpj) {
+                return $this->responseError('assoc');
+            }
+
             foreach ($request->jdata as $jdata) {
                 Association::updateOrCreate(
                     [
@@ -97,6 +107,10 @@ class UploadDataToDatabaseController extends Controller
 
         if ($request->type === "total") {
             $orgcnpj = Organization::where('cnpj', $request->jdata[0]["total_cnpj"]);
+            if (!$orgcnpj) {
+                return $this->responseError('total');
+            }
+
             foreach ($request->jdata as $jdata) {
                 Total::updateOrCreate(
                     [
@@ -123,5 +137,6 @@ class UploadDataToDatabaseController extends Controller
             };
             return $this->responseUpdate('total');
         }
+        Model::unguard();
     }
 }

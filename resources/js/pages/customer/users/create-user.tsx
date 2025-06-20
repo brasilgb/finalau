@@ -2,7 +2,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { BreadcrumbItem } from "@/types";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import { ArrowLeft, Eye, EyeClosed, Save, UserCog } from "lucide-react";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label";
@@ -28,16 +28,18 @@ const breadcrumbs: BreadcrumbItem[] = [
   },
 ];
 
-export default function CreateUser({ organizations }: any) {
-  const [showPassword, setShowPassword] = useState<boolean>(false)
+export default function CreateUser({ companies }: any) {
+  const { auth } = usePage().props as any;
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const optionsOrganization = organizations.map((organization: any) => ({
-    value: organization.id,
-    label: organization.name,
+  const optionsCompany = companies.map((company: any) => ({
+    value: company.id,
+    label: company.subname,
   }));
 
   const { data, setData, post, progress, processing, reset, errors } = useForm({
-    organization_id: '',
+    organization_id: auth.user.organization_id,
+    company_id: '',
     name: '',
     email: '',
     roles: '',
@@ -48,7 +50,7 @@ export default function CreateUser({ organizations }: any) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    post(route('users.store'), {
+    post(route('customerusers.store'), {
       onSuccess: () => reset(),
     });
   }
@@ -57,8 +59,8 @@ export default function CreateUser({ organizations }: any) {
     setData('roles', selected?.value);
   };
 
-  const changeOrganization = (selected: any) => {
-    setData('organization_id', selected?.value);
+  const changeCompany = (selected: any) => {
+    setData('company_id', selected?.value);
   };
 
   return (
@@ -94,10 +96,10 @@ export default function CreateUser({ organizations }: any) {
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="grid grid-cols-3 gap-4 mt-4">
               <div className="grid gap-2">
-                <Label htmlFor="organization_id">Organização</Label>
+                <Label htmlFor="company_id">Filial</Label>
                 <Select
-                  options={optionsOrganization}
-                  onChange={changeOrganization}
+                  options={optionsCompany}
+                  onChange={changeCompany}
                   placeholder="Selecione a organização"
                   className="shadow-xs p-0 border text-gray-700 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-9"
                   styles={{
@@ -118,7 +120,7 @@ export default function CreateUser({ organizations }: any) {
                     }),
                   }}
                 />
-                <InputError className="mt-2" message={errors.organization_id} />
+                <InputError className="mt-2" message={errors.company_id} />
               </div>
 
               <div className="grid gap-2">

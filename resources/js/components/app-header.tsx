@@ -27,18 +27,6 @@ const mainNavItems: NavItem[] = [
         icon: HandCoins,
     },
 ];
-const rightNavItems: NavItem[] = [
-    {
-        title: 'Configurações',
-        href: '/panel/settings',
-        icon: Settings,
-    },
-    {
-        title: 'Usuários',
-        href: '/panel/customerusers',
-        icon: User,
-    },
-];
 
 const activeItemStyles = 'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
 
@@ -46,6 +34,20 @@ export function AppHeader() {
     const page = usePage<SharedData>();
     const { auth } = page.props;
     const getInitials = useInitials();
+    const rightNavItems: NavItem[] = [
+        {
+            title: 'Configurações',
+            href: '/panel/settings',
+            icon: Settings,
+            show: true
+        },
+        {
+            title: 'Usuários',
+            href: '/panel/customerusers',
+            icon: User,
+            show: auth?.user?.company_id ? false : true
+        },
+    ];
 
     return (
         <div className="border-b border-sidebar-border/80">
@@ -83,7 +85,7 @@ export function AppHeader() {
                     </Sheet>
                 </div>
 
-                <Link href="/dashboard" prefetch className="flex items-center space-x-2">
+                <Link href="/panel" prefetch className="flex items-center space-x-2">
                     <AppLogo />
                 </Link>
 
@@ -117,6 +119,7 @@ export function AppHeader() {
                     <div className="relative flex items-center space-x-1">
                         <div className="hidden lg:flex">
                             {rightNavItems.map((item) => (
+                                item.show &&
                                 <TooltipProvider key={item.title} delayDuration={0}>
                                     <Tooltip>
                                         <TooltipTrigger>

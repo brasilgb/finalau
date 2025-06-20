@@ -8,6 +8,7 @@ use App\Models\AdmSetting;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class CustomerSettingController extends Controller
@@ -19,7 +20,7 @@ class CustomerSettingController extends Controller
     {
         if (AdmSetting::get()->isEmpty()) {
             Model::reguard();
-            AdmSetting::create();
+            AdmSetting::create(['organization_id' => Auth::user()->organization_id]);
             Model::unguard();
         }
         $settings = AdmSetting::orderBy("id", "DESC")->first();
