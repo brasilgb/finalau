@@ -24,7 +24,7 @@ export function FilterDate() {
                     <Button
                         variant={"outline"}
                         className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
+                            "min-w-[160px] pl-3 text-left font-normal",
                             !selectedDate && "text-muted-foreground"
                         )}
                     >

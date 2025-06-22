@@ -21,6 +21,8 @@ import { roleUserByValue } from '@/Utils/functions';
 import ActionDelete from '@/components/action-delete';
 import AppPagination from '@/components/app-pagination';
 import CustomerLayout from '@/layouts/customer-layout';
+import { DataTable } from '@/components/data-table';
+import { columns } from './columns';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -54,76 +56,20 @@ export default function Users({ users }: any) {
         </div>
       </div>
 
-      <div className='flex items-center justify-between p-4'>
-        <div>
-          <InputSearch placeholder="Buscar usuário" url="customerusers.index" />
-        </div>
-        <div>
-          <Button variant={'default'} asChild>
-            <Link
-              href={route('customerusers.create')}
-            >
-              <Plus className='h-4 w-4' />
-              <span>Usuário</span>
-            </Link>
-          </Button>
-        </div>
-      </div>
-
       <div className='p-4'>
-        <div className='border rounded-lg'>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">#</TableHead>
-                <TableHead>Nome</TableHead>
-                <TableHead>Função</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Cadastro</TableHead>
-                <TableHead></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {users?.length > 0 ?
-                users?.map((user: any) => (
-                  <TableRow key={user.id}>
-                    <TableCell>{user.id}</TableCell>
-                    <TableCell className="font-medium">{user.name}</TableCell>
-                    <TableCell>{roleUserByValue(user.roles)}</TableCell>
-                    <TableCell>{user.status ? <Badge variant={'default'}>Ativo</Badge> : <Badge variant={'destructive'}>Inativo</Badge>}</TableCell>
-                    <TableCell>{moment(user.created_at).format("DD/MM/YYYY")}</TableCell>
-                    <TableCell className='flex justify-end gap-2'>
-
-                      <Button asChild size="icon" className="bg-orange-500 hover:bg-orange-600 text-white">
-                        <Link href={route("customerusers.edit", user.id)}>
-                          <Pencil className="h-4 w-4" />
-                        </Link>
-                      </Button>
-
-                      <ActionDelete title={'esta mensagem'} url={'customerusers.destroy'} param={user.id} />
-                    </TableCell>
-                  </TableRow>
-                ))
-                : (
-                  <TableRow>
-                    <TableCell colSpan={7} className='h-16 w-full flex items-center justify-center'>
-                      Não há dados a serem mostrados no momento.
-                    </TableCell>
-                  </TableRow>
-                )
-              }
-            </TableBody>
-            {users?.length > users?.total &&
-              <TableFooter>
-                <TableRow>
-                  <TableCell colSpan={7}>
-                    <AppPagination data={users} />
-                  </TableCell>
-                </TableRow>
-              </TableFooter>
-            }
-          </Table>
-        </div>
+        <DataTable
+          columns={columns}
+          data={users}
+          label={'Usuário'}
+          link={
+            <Button asChild>
+              <Link href={route('customerusers.create')}>
+                <Plus />Usuários
+              </Link>
+            </Button>
+          }
+          filter={'name'}
+        />
       </div>
     </CustomerLayout>
   )

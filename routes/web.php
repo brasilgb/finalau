@@ -3,12 +3,13 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdmSettingController;
 use App\Http\Controllers\Customer\CustomerSettingController;
+use App\Http\Controllers\Customer\LogsController;
 use App\Http\Controllers\OrganizationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('welcome');
+    return Inertia::render('login');
 })->name('home');
 
 Route::middleware(['auth', 'verified', 'IsRoot'])->group(function () {
@@ -20,8 +21,10 @@ Route::middleware(['auth', 'verified', 'IsRoot'])->group(function () {
 Route::middleware(['auth', 'IsCustomer'])->group(function () {
     Route::get('panel/settings', [CustomerSettingController::class, 'index'])->name('customersettings.index');
     Route::put('panel/settings/{setting}', [CustomerSettingController::class, 'update'])->name('customersettings.update');
+    Route::get('panel/logs', [LogsController::class, 'index'])->name('customerlogs');
 });
 
+require __DIR__ . '/logs.php';
 require __DIR__ . '/customers.php';
 require __DIR__ . '/organizations.php';
 require __DIR__ . '/companies.php';

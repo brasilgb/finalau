@@ -1,4 +1,4 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 
@@ -22,6 +22,7 @@ interface LoginProps {
 }
 
 export default function Login({ status, canResetPassword }: LoginProps) {
+    const { flash, auth } = usePage().props as any;
     const [showPassword, setShowPassword] = useState(false);
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         email: '',
@@ -37,7 +38,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
     };
 
     return (
-        <AuthLayout title="Entre na sua conta" description="Digite seu e-mail e senha abaixo para fazer login">
+        <AuthLayout title="Acesse seus dados" description="Entre para visualizar suas análises de vendas em tempo real">
             <Head title="Log in" />
 
             <form className="flex flex-col gap-6" onSubmit={submit}>
@@ -63,7 +64,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             <Label htmlFor="password">Senha</Label>
                             {canResetPassword && (
                                 <TextLink href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
-                                    Perdi minha senha?
+                                    Perdi minha senha
                                 </TextLink>
                             )}
                         </div>
@@ -93,16 +94,17 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                     <Button type="submit" className="mt-4 w-full" tabIndex={4} disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Entrar
+                        Entrar{auth?.user?.organization_id}
                     </Button>
                 </div>
-
-                <div className="text-center text-sm text-muted-foreground">
-                    Não tem uma conta?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
-                        Registre-se
-                    </TextLink>
-                </div>
+                {!auth?.userexist &&
+                    <div className="text-center text-sm text-muted-foreground">
+                        Não tem uma conta?{' '}
+                        <TextLink href={route('register')} tabIndex={5}>
+                            Registre-se
+                        </TextLink>
+                    </div>
+                }
             </form>
 
             {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}

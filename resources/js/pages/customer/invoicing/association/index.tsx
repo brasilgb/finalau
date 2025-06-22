@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { columns } from "./columns";
 import { useAppContext } from "@/contexts/AppContext";
 import moment from "moment";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { maskMoney } from "@/Utils/mask";
 
 export default function Association() {
     const { url } = usePage().props as any;
@@ -27,11 +29,40 @@ export default function Association() {
     }, [companyNumber, selectedDate]);
 
     return (
-        <DataTable
-            columns={columns}
-            data={customerAssociation}
-            label={'Association'}
-            filter={''}
-        />
+        <div className="w-full">
+            <div className="grid md:grid-cols-4 gap-4">
+                <Card>
+                    <CardContent>
+                        <div className="text-xs font-bold">Meta</div>
+                        <div className="text-xl font-bold">R$ {maskMoney('12')}</div>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardContent>
+                        <div className="text-xs font-bold">Venda</div>
+                        <div className="text-xl font-bold">R$ {maskMoney('12')}</div>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardContent>
+                        <div className="text-xs font-bold">Margem</div>
+                        <div className="text-xl font-bold">12</div>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardContent>
+                        <div className="text-xs font-bold">Representa</div>
+                        <div className="text-xl font-bold">12</div>
+                    </CardContent>
+                </Card>
+            </div>
+
+            <DataTable
+                columns={columns}
+                data={customerAssociation.filter((fil: any) => (fil.assoc_ass !== 'XX'))}
+                label={'Association'}
+                filter={''}
+            />
+        </div>
     )
 }

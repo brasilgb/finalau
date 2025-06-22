@@ -7,7 +7,7 @@ import { useAppContext } from '@/contexts/AppContext'
 import CustomerLayout from '@/layouts/customer-layout'
 import apios from '@/Utils/connectApi'
 import { Head, usePage } from '@inertiajs/react'
-import { DollarSign } from 'lucide-react'
+import { ChartCandlestick, ChartScatter, DollarSign, TrendingUpDown } from 'lucide-react'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 
@@ -16,7 +16,6 @@ export default function home() {
     const { companyNumber, selectedDate } = useAppContext();
     const [totalSales, setTotalSales] = useState<any>([]);
     const [chartSales, setChartSales] = useState<any>([]);
-// console.log('4444'+companyNumber, '5555'+selectedDate );
 
     useEffect(() => {
         const getTotals = async () => {
@@ -56,26 +55,26 @@ export default function home() {
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                     <KpiDashboard
                         title="Faturamento"
-                        subtitle="+12.5% vs mês anterior"
+                        subtitle=""
                         icon={DollarSign}
                         value={totalSales?.total_valven}
                     />
                     <KpiDashboard
                         title="Meta"
-                        subtitle="+12.5% vs mês anterior"
-                        icon={DollarSign}
+                        subtitle=""
+                        icon={TrendingUpDown}
                         value={totalSales?.total_meta}
                     />
                     <KpiDashboard
                         title="Projeção"
-                        subtitle="+12.5% vs mês anterior"
-                        icon={DollarSign}
+                        subtitle=""
+                        icon={ChartCandlestick}
                         value={totalSales?.total_valven}
                     />
                     <KpiDashboard
                         title="Juros"
-                        subtitle="+12.5% vs mês anterior"
-                        icon={DollarSign}
+                        subtitle=""
+                        icon={ChartScatter}
                         value={totalSales?.total_valjur}
                     />
                 </div>

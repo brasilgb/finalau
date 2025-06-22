@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\AdmSetting;
+use App\Models\User;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -45,12 +46,14 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'message' => fn() => $request->session()->get('success'),
             ],
-            'admsetting' => AdmSetting::first(['name', 'logo']),
+            'admsetting' => AdmSetting::first(['organization_id','name', 'logo']),
+            'admauth' => AdmSetting::where('organization_id', null)->first(['name', 'logo']),
             'name' => config('app.name'),
             'url' => config('app.url'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
                 'user' => $request->user(),
+                'userexist' => User::where('organization_id', null)->first()
             ],
             'ziggy' => fn(): array => [
                 ...(new Ziggy)->toArray(),
