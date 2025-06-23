@@ -12,7 +12,6 @@ import InputError from "@/components/input-error";
 import { Switch } from "@/components/ui/switch";
 import { rolesUser } from "@/Utils/dataSelect";
 import { useState } from "react";
-import { maskPhone } from "@/Utils/mask";
 
 const breadcrumbs: BreadcrumbItem[] = [
   {

@@ -1,0 +1,1 @@
+import{a as o}from"./app-B76nWsCW.js";const a=o.create({baseURL:"https://automagico.megb.com.br/api",headers:{"Access-Control-Allow-Origin":"*","Access-Control-Allow-Methods":"GET, POST, PATCH, PUT, DELETE, OPTIONS","Access-Control-Allow-Headers":"*","Content-Type":"application/json"}});export{a};
