@@ -28,34 +28,38 @@ export default function Association() {
         getSummary();
     }, [companyNumber, selectedDate]);
 
+
     return (
         <div className="w-full">
-            <div className="grid md:grid-cols-4 gap-4">
-                <Card>
-                    <CardContent>
-                        <div className="text-xs font-bold">Meta</div>
-                        <div className="text-xl font-bold">R$ {maskMoney('12')}</div>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardContent>
-                        <div className="text-xs font-bold">Venda</div>
-                        <div className="text-xl font-bold">R$ {maskMoney('12')}</div>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardContent>
-                        <div className="text-xs font-bold">Margem</div>
-                        <div className="text-xl font-bold">12</div>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardContent>
-                        <div className="text-xs font-bold">Representa</div>
-                        <div className="text-xl font-bold">12</div>
-                    </CardContent>
-                </Card>
-            </div>
+            {customerAssociation.filter((fil: any) => (fil.assoc_ass === 'XX')).map((total: any) => (
+                <div className="grid md:grid-cols-4 gap-4">
+                    <Card>
+                        <CardContent>
+                            <div className="text-xs font-bold">Meta</div>
+                            <div className="text-xl font-bold">R$ {maskMoney(total?.assoc_metdia)}</div>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardContent>
+                            <div className="text-xs font-bold">Venda</div>
+                            <div className="text-xl font-bold">R$ {maskMoney(total(total?.assoc_valven))}</div>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardContent>
+                            <div className="text-xs font-bold">Margem</div>
+                            <div className="text-xl font-bold">{total?.assoc_margem}</div>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardContent>
+                            <div className="text-xs font-bold">Representa</div>
+                            <div className="text-xl font-bold">{total?.assoc_repres}</div>
+                        </CardContent>
+                    </Card>
+                </div>
+            ))
+            }
 
             <DataTable
                 columns={columns}
