@@ -54,7 +54,6 @@ class CustomerUserController extends Controller
     {
         $data = $request->all();
         $request->validated();
-        $data['id'] = User::exists() ? User::latest()->first()->id + 1 : 1;
         $data['password'] = Hash::make($request->password);
         Model::reguard();
         User::create($data);
@@ -90,7 +89,7 @@ class CustomerUserController extends Controller
         Model::reguard();
         $customeruser->update($data);
         Model::unguard();
-        return redirect()->route('customerusers.show', ['user' => $customeruser->id])->with('success', 'Usuário editado com sucesso');
+        return redirect()->route('customerusers.show', ['customeruser' => $customeruser->id])->with('success', 'Usuário editado com sucesso');
     }
 
     /**
