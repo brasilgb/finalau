@@ -9,13 +9,16 @@ interface AppProviderProps {
 export const AppProvider = ({ children }: AppProviderProps) => {
     const [companyNumber, setCompanyNumber] = useState<string>('1');
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+    const [ loading, setLoading] = useState<boolean>(false);
 
     return (
         <AppContext.Provider value={{
             companyNumber,
             setCompanyNumber,
             selectedDate,
-            setSelectedDate
+            setSelectedDate,
+            loading,
+            setLoading
         }}>
             {children}
         </AppContext.Provider>

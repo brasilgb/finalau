@@ -1,0 +1,1 @@
+import{a as o}from"./app-CPBzf7B8.js";const a=o.create({baseURL:"http://localhost:8000/api/",headers:{"Access-Control-Allow-Origin":"*","Access-Control-Allow-Methods":"GET, POST, PATCH, PUT, DELETE, OPTIONS","Access-Control-Allow-Headers":"*","Content-Type":"application/json"}});export{a};

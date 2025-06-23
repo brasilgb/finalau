@@ -6,7 +6,7 @@ import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
 import { AppProvider } from './contexts/AppContext';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Automagico';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

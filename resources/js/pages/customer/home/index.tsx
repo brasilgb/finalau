@@ -10,15 +10,18 @@ import { Head, usePage } from '@inertiajs/react'
 import { ChartCandlestick, ChartScatter, DollarSign, TrendingUpDown } from 'lucide-react'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import 'animate.css';
+import { set } from 'date-fns'
 
 export default function home() {
     const { url } = usePage().props as any;
-    const { companyNumber, selectedDate } = useAppContext();
+    const { companyNumber, selectedDate, loading, setLoading } = useAppContext();
     const [totalSales, setTotalSales] = useState<any>([]);
     const [chartSales, setChartSales] = useState<any>([]);
 
     useEffect(() => {
         const getTotals = async () => {
+            setLoading(true);
             await apios.get(`${url}/api/totals?organization=1&company=${companyNumber}&date=${moment(selectedDate).format("YYYYMMDD")}`)
                 .then((res) => {
                     setTotalSales(res.data.response.totals);
@@ -26,7 +29,7 @@ export default function home() {
                 .catch((err) => {
                     console.log(err);
 
-                }).finally(() => console.log('')
+                }).finally(() => setLoading(false)
                 )
         };
         getTotals();
@@ -34,6 +37,7 @@ export default function home() {
 
     useEffect(() => {
         const getSummary = async () => {
+            setLoading(true);
             await apios.get(`${url}/api/chartsales?organization=1&company=${companyNumber}&date=${moment(selectedDate).format("YYYYMMDD")}`)
                 .then((res) => {
                     setChartSales(res.data.response.sales);
@@ -41,7 +45,7 @@ export default function home() {
                 .catch((err) => {
                     console.log(err);
 
-                }).finally(() => console.log('ok')
+                }).finally(() => setLoading(false)
                 )
         };
         getSummary();
@@ -50,7 +54,7 @@ export default function home() {
     return (
         <CustomerLayout>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">
+            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto animate__animated animate__fadeIn">
                 <AnaliticHeader title='Dashboard de Análise' subtitle='Análise de faturamento e métricas principais' />
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                     <KpiDashboard
@@ -78,7 +82,7 @@ export default function home() {
                         value={totalSales?.total_valjur}
                     />
                 </div>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 animate__animated animate__fadeIn">
                     <RadialDashboard
                         title=""
                         subtitle=""

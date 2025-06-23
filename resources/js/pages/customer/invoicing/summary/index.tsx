@@ -5,14 +5,16 @@ import React, { useEffect, useState } from 'react'
 import { columns } from './columns';
 import { useAppContext } from '@/contexts/AppContext';
 import moment from 'moment';
+import AppLoading from '@/components/app-loading';
 
 export default function Summary() {
     const { url } = usePage().props as any;
-    const { companyNumber, selectedDate } = useAppContext();
+    const { companyNumber, selectedDate, setLoading, loading } = useAppContext();
     const [customerSales, setCustomerSales] = useState<any>([]);
 
     useEffect(() => {
         const getSummary = async () => {
+            setLoading(true);
             await apios.get(`${url}/api/sales?organization=1&company=${companyNumber}&date=${moment(selectedDate).format("YYYYMMDD")}`)
                 .then((res) => {
                     setCustomerSales(res.data.response.sales);
@@ -20,18 +22,23 @@ export default function Summary() {
                 .catch((err) => {
                     console.log(err);
 
-                }).finally(() => console.log('')
+                }).finally(() => setLoading(false)
                 )
         };
         getSummary();
     }, [companyNumber, selectedDate]);
 
     return (
-        <DataTable
-            columns={columns}
-            data={customerSales}
-            label={'Filial'}
-            filter={''}
-        />
+        <>
+            {loading && <AppLoading />}
+            {customerSales && !loading &&
+                <DataTable
+                    columns={columns}
+                    data={customerSales}
+                    label={'Filial'}
+                    filter={''}
+                />
+            }
+        </>
     )
 }

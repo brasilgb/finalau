@@ -4,7 +4,7 @@ import CustomerLayout from '@/layouts/customer-layout'
 import { Head } from '@inertiajs/react'
 import Summary from './summary'
 import Association from './association'
-
+import 'animate.css';
 export default function Invoicing() {
   return (
     <CustomerLayout>
@@ -19,10 +19,10 @@ export default function Invoicing() {
               <TabsTrigger value="association">Associação</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="summary" className="space-y-4">
+            <TabsContent value="summary" className="space-y-4 animate__animated animate__fadeIn">
               <Summary />
             </TabsContent>
-            <TabsContent value="association" className="space-y-4">
+            <TabsContent value="association" className="space-y-4 animate__animated animate__fadeIn">
               <Association />
             </TabsContent>
           </Tabs>
