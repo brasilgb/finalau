@@ -6,10 +6,9 @@ use App\Http\Controllers\Customer\CustomerSettingController;
 use App\Http\Controllers\Customer\LogsController;
 use App\Http\Controllers\OrganizationController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('auth/login');
+    return redirect()->route('dashboard');
 })->name('home');
 
 Route::middleware(['auth', 'verified', 'IsRoot'])->group(function () {
