@@ -50,6 +50,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('dashboard');
+        return redirect()->route('dashboard');
     }
 }
