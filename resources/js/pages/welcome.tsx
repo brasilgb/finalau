@@ -1,5 +1,7 @@
-import { router } from "@inertiajs/react";
+import { type SharedData } from '@/types';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 
 export default function Welcome() {
-    return router.get(route('login'));
+    router.get('login');
+    return <></>
 }
