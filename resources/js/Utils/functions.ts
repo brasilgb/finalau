@@ -34,8 +34,6 @@ const roleUserByValue = (value: any) => {
             return "Administrador";
         case 2:
             return "Usuário";
-        case 3:
-            return "Técnico";
     }
 };
 
