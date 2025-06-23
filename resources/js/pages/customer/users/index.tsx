@@ -3,23 +3,8 @@ import { Icon } from '@/components/icon';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link, router, usePage } from '@inertiajs/react'
 import { Pencil, Plus, UserCog } from 'lucide-react';
-import moment from 'moment'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { Button } from '@/components/ui/button';
-import InputSearch from '@/components/inputSearch';
 import AlertSuccess from '@/components/app-alert-success';
-import { Badge } from '@/components/ui/badge';
-import { roleUserByValue } from '@/Utils/functions';
-import ActionDelete from '@/components/action-delete';
-import AppPagination from '@/components/app-pagination';
 import CustomerLayout from '@/layouts/customer-layout';
 import { DataTable } from '@/components/data-table';
 import { columns } from './columns';
