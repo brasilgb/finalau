@@ -30,9 +30,9 @@ export default function Summary() {
 
     return (
         <>
-            {loading && <AppLoading />}
-            {customerSales && !loading &&
-                <DataTable
+            {loading 
+            ? <AppLoading />
+            : <DataTable
                     columns={columns}
                     data={customerSales}
                     label={'Filial'}

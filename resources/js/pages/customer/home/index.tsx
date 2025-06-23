@@ -12,6 +12,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import 'animate.css';
 import { set } from 'date-fns'
+import AppLoading from '@/components/app-loading'
 
 export default function home() {
     const { url, auth } = usePage().props as any;
@@ -54,64 +55,68 @@ export default function home() {
     return (
         <CustomerLayout>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto animate__animated animate__fadeIn">
-                <AnaliticHeader title='Dashboard de Análise' subtitle='Análise de faturamento e métricas principais' />
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    <KpiDashboard
-                        title="Faturamento"
-                        subtitle=""
-                        icon={DollarSign}
-                        value={totalSales?.total_valven}
-                    />
-                    <KpiDashboard
-                        title="Meta"
-                        subtitle=""
-                        icon={TrendingUpDown}
-                        value={totalSales?.total_meta}
-                    />
-                    <KpiDashboard
-                        title="Projeção"
-                        subtitle=""
-                        icon={ChartCandlestick}
-                        value={totalSales?.total_valven}
-                    />
-                    <KpiDashboard
-                        title="Juros"
-                        subtitle=""
-                        icon={ChartScatter}
-                        value={totalSales?.total_valjur}
-                    />
+            {loading
+                ? <AppLoading />
+                :
+                <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto animate__animated animate__fadeIn">
+                    <AnaliticHeader title='Dashboard de Análise' subtitle='Análise de faturamento e métricas principais' />
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                        <KpiDashboard
+                            title="Faturamento"
+                            subtitle=""
+                            icon={DollarSign}
+                            value={totalSales?.total_valven}
+                        />
+                        <KpiDashboard
+                            title="Meta"
+                            subtitle=""
+                            icon={TrendingUpDown}
+                            value={totalSales?.total_meta}
+                        />
+                        <KpiDashboard
+                            title="Projeção"
+                            subtitle=""
+                            icon={ChartCandlestick}
+                            value={totalSales?.total_valven}
+                        />
+                        <KpiDashboard
+                            title="Juros"
+                            subtitle=""
+                            icon={ChartScatter}
+                            value={totalSales?.total_valjur}
+                        />
+                    </div>
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 animate__animated animate__fadeIn">
+                        <RadialDashboard
+                            title=""
+                            subtitle=""
+                            label="Margem"
+                            value={totalSales?.total_margem}
+                        />
+                        <RadialDashboard
+                            title=""
+                            subtitle=""
+                            label="Meta"
+                            value={totalSales?.total_permet}
+                        />
+                        <RadialDashboard
+                            title=""
+                            subtitle=""
+                            label="Juros"
+                            value={totalSales?.total_perjur}
+                        />
+                        <RadialDashboard
+                            title=""
+                            subtitle=""
+                            label="Inadimplência"
+                            value={totalSales?.total_perina}
+                        />
+                    </div>
+                    <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
+                        <CompostoDashboard data={chartSales} />
+                    </div>
                 </div>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 animate__animated animate__fadeIn">
-                    <RadialDashboard
-                        title=""
-                        subtitle=""
-                        label="Margem"
-                        value={totalSales?.total_margem}
-                    />
-                    <RadialDashboard
-                        title=""
-                        subtitle=""
-                        label="Meta"
-                        value={totalSales?.total_permet}
-                    />
-                    <RadialDashboard
-                        title=""
-                        subtitle=""
-                        label="Juros"
-                        value={totalSales?.total_perjur}
-                    />
-                    <RadialDashboard
-                        title=""
-                        subtitle=""
-                        label="Inadimplência"
-                        value={totalSales?.total_perina}
-                    />
-                </div>
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <CompostoDashboard data={chartSales} />
-                </div>
-            </div>
+            }
         </CustomerLayout>
     )
 }

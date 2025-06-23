@@ -36,8 +36,9 @@ export default function Association() {
 
     return (
         <>
-            {loading && <AppLoading />}
-            {customerAssociation && !loading &&
+            {loading
+                ? <AppLoading />
+                :
                 <>
                     <div className="grid md:grid-cols-4 gap-4">
                         <Card>
