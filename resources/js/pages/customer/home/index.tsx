@@ -14,7 +14,7 @@ import 'animate.css';
 import { set } from 'date-fns'
 
 export default function home() {
-    const { url } = usePage().props as any;
+    const { url, auth } = usePage().props as any;
     const { companyNumber, selectedDate, loading, setLoading } = useAppContext();
     const [totalSales, setTotalSales] = useState<any>([]);
     const [chartSales, setChartSales] = useState<any>([]);
@@ -22,7 +22,7 @@ export default function home() {
     useEffect(() => {
         const getTotals = async () => {
             setLoading(true);
-            await apios.get(`${url}/api/totals?organization=1&company=${companyNumber}&date=${moment(selectedDate).format("YYYYMMDD")}`)
+            await apios.get(`${url}/api/totals?organization=${auth?.user?.organization_id}&company=${companyNumber}&date=${moment(selectedDate).format("YYYYMMDD")}`)
                 .then((res) => {
                     setTotalSales(res.data.response.totals);
                 })
@@ -33,7 +33,7 @@ export default function home() {
                 )
         };
         getTotals();
-    }, [companyNumber, selectedDate]);
+    }, [companyNumber, selectedDate, auth]);
 
     useEffect(() => {
         const getSummary = async () => {

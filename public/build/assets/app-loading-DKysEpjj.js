@@ -1,0 +1,1 @@
+import{j as e}from"./app-Bo-taagn.js";function s(){return e.jsx("div",{className:"fixed top-0 left-0 w-full h-full bg-background/10 z-50 flex items-center justify-center",children:e.jsx("div",{className:"flex items-center justify-center",children:e.jsx("div",{className:"animate-spin rounded-full h-12 w-12 border-b-2 border-primary"})})})}export{s as A};

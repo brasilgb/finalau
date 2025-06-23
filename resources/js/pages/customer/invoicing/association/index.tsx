@@ -10,7 +10,7 @@ import { maskMoney } from "@/Utils/mask";
 import AppLoading from "@/components/app-loading";
 
 export default function Association() {
-    const { url } = usePage().props as any;
+    const { url, auth } = usePage().props as any;
     const { companyNumber, selectedDate, setLoading, loading } = useAppContext();
     const [customerAssociation, setCustomerAssociation] = useState<any>([]);
     const [totalAssociation, setTotalAssociation] = useState<any>([]);
@@ -18,7 +18,7 @@ export default function Association() {
     useEffect(() => {
         const getSummary = async () => {
             setLoading(true);
-            await apios.get(`${url}/api/associations?organization=1&company=${companyNumber}&date=${moment(selectedDate).format("YYYYMMDD")}`)
+            await apios.get(`${url}/api/associations?organization=${auth?.user?.organization_id}&company=${companyNumber}&date=${moment(selectedDate).format("YYYYMMDD")}`)
                 .then((res) => {
                     const data = res.data.response.association;
                     setCustomerAssociation(data);
