@@ -36,45 +36,42 @@ export default function Association() {
 
     return (
         <>
-            {loading
-                ? <AppLoading />
-                :
-                <>
-                    <div className="grid md:grid-cols-4 gap-4">
-                        <Card>
-                            <CardContent>
-                                <div className="text-xs font-bold">Meta</div>
-                                <div className="text-xl font-bold">R$ {maskMoney(totalAssociation[0]?.assoc_metdia)}</div>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardContent>
-                                <div className="text-xs font-bold">Venda</div>
-                                <div className="text-xl font-bold">R$ {maskMoney((totalAssociation[0]?.assoc_valven))}</div>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardContent>
-                                <div className="text-xs font-bold">Margem</div>
-                                <div className="text-xl font-bold">{totalAssociation[0]?.assoc_margem}%</div>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardContent>
-                                <div className="text-xs font-bold">Representa</div>
-                                <div className="text-xl font-bold">{totalAssociation[0]?.assoc_repres}%</div>
-                            </CardContent>
-                        </Card>
-                    </div>
+            {loading && <AppLoading />}
+            <div>
+                <div className="grid md:grid-cols-4 gap-4">
+                    <Card>
+                        <CardContent>
+                            <div className="text-xs font-bold">Meta</div>
+                            <div className="text-xl font-bold">R$ {maskMoney(totalAssociation[0]?.assoc_metdia)}</div>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardContent>
+                            <div className="text-xs font-bold">Venda</div>
+                            <div className="text-xl font-bold">R$ {maskMoney((totalAssociation[0]?.assoc_valven))}</div>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardContent>
+                            <div className="text-xs font-bold">Margem</div>
+                            <div className="text-xl font-bold">{totalAssociation[0]?.assoc_margem}%</div>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardContent>
+                            <div className="text-xs font-bold">Representa</div>
+                            <div className="text-xl font-bold">{totalAssociation[0]?.assoc_repres}%</div>
+                        </CardContent>
+                    </Card>
+                </div>
 
-                    <DataTable
-                        columns={columns}
-                        data={customerAssociation.filter((fil: any) => (fil.assoc_ass !== 'XX'))}
-                        label={'Association'}
-                        filter={''}
-                    />
-                </>
-            }
+                <DataTable
+                    columns={columns}
+                    data={customerAssociation.filter((fil: any) => (fil.assoc_ass !== 'XX'))}
+                    label={'Association'}
+                    filter={''}
+                />
+            </div>
         </>
     )
 }

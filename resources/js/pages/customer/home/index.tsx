@@ -55,9 +55,7 @@ export default function home() {
     return (
         <CustomerLayout>
             <Head title="Dashboard" />
-            {loading
-                ? <AppLoading />
-                :
+            {loading && <AppLoading />}
                 <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto animate__animated animate__fadeIn">
                     <AnaliticHeader title='Dashboard de Análise' subtitle='Análise de faturamento e métricas principais' />
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -112,11 +110,11 @@ export default function home() {
                             value={totalSales?.total_perina}
                         />
                     </div>
-                    <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                        <CompostoDashboard data={chartSales} />
-                    </div>
                 </div>
-            }
+
+                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
+                    <CompostoDashboard data={chartSales} />
+                </div>
         </CustomerLayout>
     )
 }
